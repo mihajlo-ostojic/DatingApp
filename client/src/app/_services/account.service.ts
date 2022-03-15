@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -20,8 +21,7 @@ export class AccountService {
       map((response:User) => {
           const user = response;
           if(user) {
-            localStorage.setItem('user',JSON.stringify(user));
-            this.currentUserSource.next(user);
+            this.setCurrentUser(user);
           }
 
       })
@@ -33,8 +33,7 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if(user){
-          localStorage.setItem('user',JSON.stringify(user));
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     )
@@ -42,6 +41,7 @@ export class AccountService {
 
   setCurrentUser(user: User)
   {
+    localStorage.setItem('user',JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 
