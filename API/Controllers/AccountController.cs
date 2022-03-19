@@ -49,7 +49,8 @@ namespace API.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 
@@ -72,7 +73,8 @@ namespace API.Controllers
                 Username = users.UserName,
                 Token = _tokenService.CreateToken(users),
                 PhotoUrl = users.Photos.FirstOrDefault( x => x.IsMain)?.Url,
-                KnownAs = users.KnownAs
+                KnownAs = users.KnownAs,
+                Gender = users.Gender
             };
         }
 
